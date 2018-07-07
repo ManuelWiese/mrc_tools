@@ -35,10 +35,10 @@ class WahooSubinterval:
 
         for key, value in self.values.items():
             if isinstance(value, list):
-                if len(value) == 2:
+                if len(value) == 2 and value[0] != value[1]:
                     ramp_rate = (value[1] - value[0]) / self.duration
                     output += "{}={}@{:.6f}\n".format(key, value[0], ramp_rate)
-                elif len(value) == 1:
+                else:
                     output += "{}={}\n".format(key, value[0])
             else:
                 output += "{}={}\n".format(key, value)
