@@ -33,10 +33,13 @@ class Mrc:
         messages = []
 
         for line in raw_course_text.split("\n"):
+            if line == "":
+                continue
+            
             try:
                 messages.append(MrcMessage.from_raw_course_text(line))
             except ValueError:
-                print("Could not parse Interval: {}".format(line))
+                print("Could not parse Course Text: {}".format(line))
 
         return messages
 
@@ -46,10 +49,13 @@ class Mrc:
         intervals = []
 
         for line in raw_interval_data.split("\n"):
+            if line == "":
+                continue
+
             try:
                 intervals.append(MrcInterval.from_raw_interval_data(line))
             except ValueError:
-                print("Could not parse Interval: {}".format(line))
+                print("Could not parse Interval: '{}'".format(repr(line)))
         return intervals
 
     def get_between(self, start, end):

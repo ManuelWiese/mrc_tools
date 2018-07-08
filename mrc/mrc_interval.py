@@ -9,5 +9,9 @@ class MrcInterval:
 
     @classmethod
     def from_raw_interval_data(cls, raw_interval_data):
-        start_time, end_time, name = raw_interval_data.strip().split("\t")
+        splitted = raw_interval_data.strip().split("\t")
+        if len(splitted) >= 3:
+            start_time, end_time, name = splitted[:3]
+        else:
+            raise ValueError()
         return cls(int(start_time), int(end_time), name)
