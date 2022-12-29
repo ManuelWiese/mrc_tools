@@ -16,10 +16,11 @@ def get_wahoo_intervals(mrc):
 
     return wahoo_intervals
 
-def mrc_to_wahoo_plan(mrc, name=None, description=None):
+def mrc_to_wahoo_plan(mrc):
     builder = WahooPlan.Builder()
-    builder.set_name(name).set_description(description)
-    
+    builder.set_name(mrc.course_header.file_name)
+    builder.set_description(mrc.course_header.description)
+
     for interval in get_wahoo_intervals(mrc):
         builder.add_interval(interval)
 
@@ -33,6 +34,7 @@ if __name__ == "__main__":
     filename = sys.argv[1]
 
     mrc = Mrc.load_mrc_file(filename)
+
 
     if mrc.course_header.data_types[1] != "PERCENT" and mrc.course_header.data_types[1] != "FTP":
         print("mrc has no PERCENT or FTP data type")
