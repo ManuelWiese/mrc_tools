@@ -19,6 +19,12 @@ def get_wahoo_intervals(mrc):
 
 def mrc_to_wahoo_plan(mrc, name=None, description=None):
     builder = WahooPlan.Builder()
+
+    if not name:
+        name, _ = os.path.splitext(mrc.course_header.file_name)
+    if not description:
+        description = mrc.course_header.description
+
     builder.set_name(name).set_description(description)
 
     for interval in get_wahoo_intervals(mrc):
@@ -39,7 +45,5 @@ if __name__ == "__main__":
         print("mrc has no PERCENT or FTP data type")
         quit()
 
-    root, _ = os.path.splitext(filename)
-    name = os.path.basename(root)
     with open(filename.strip("mrc") + "plan", "w") as f:
-        f.write(str(mrc_to_wahoo_plan(mrc, name)))
+        f.write(str(mrc_to_wahoo_plan(mrc)))
