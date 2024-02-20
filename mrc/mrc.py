@@ -35,7 +35,7 @@ class Mrc:
         for line in raw_course_text.split("\n"):
             if line == "":
                 continue
-            
+
             try:
                 messages.append(MrcMessage.from_raw_course_text(line))
             except ValueError:

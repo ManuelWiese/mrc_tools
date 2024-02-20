@@ -1,6 +1,7 @@
 from mrc.mrc import Mrc
 from wahoo_plan.wahoo_plan import WahooPlan, WahooInterval
 import sys
+import os
 
 def get_wahoo_intervals(mrc):
     wahoo_intervals = []
@@ -19,7 +20,7 @@ def get_wahoo_intervals(mrc):
 def mrc_to_wahoo_plan(mrc, name=None, description=None):
     builder = WahooPlan.Builder()
     builder.set_name(name).set_description(description)
-    
+
     for interval in get_wahoo_intervals(mrc):
         builder.add_interval(interval)
 
@@ -38,5 +39,7 @@ if __name__ == "__main__":
         print("mrc has no PERCENT or FTP data type")
         quit()
 
+    root, _ = os.path.splitext(filename)
+    name = os.path.basename(root)
     with open(filename.strip("mrc") + "plan", "w") as f:
-        f.write(str(mrc_to_wahoo_plan(mrc)))
+        f.write(str(mrc_to_wahoo_plan(mrc, name)))
