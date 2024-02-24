@@ -1,6 +1,7 @@
 from mrc.mrc import Mrc
 from wahoo_plan.wahoo_plan import WahooPlan, WahooInterval
 import sys
+import os
 
 def get_wahoo_intervals(mrc):
     wahoo_intervals = []
@@ -18,8 +19,14 @@ def get_wahoo_intervals(mrc):
 
 def mrc_to_wahoo_plan(mrc, name=None, description=None):
     builder = WahooPlan.Builder()
+
+    if not name:
+        name, _ = os.path.splitext(mrc.course_header.file_name)
+    if not description:
+        description = mrc.course_header.description
+
     builder.set_name(name).set_description(description)
-    
+
     for interval in get_wahoo_intervals(mrc):
         builder.add_interval(interval)
 

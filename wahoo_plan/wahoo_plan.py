@@ -100,6 +100,11 @@ class WahooPlan:
     def __init__(self):
         self.name = None
         self.duration = 0
+
+        # LOCATION_TYPE and WORKOUT_TYPE, see:
+        # https://gist.github.com/Intyre/2c0a8e337671ed6f523950ef08e3ca3f?permalink_comment_id=4688536#gistcomment-4688536
+        self.location_type = 0
+        self.workout_type = 0
         self.description = None
         self.ftp_test_factor = None
 
@@ -111,7 +116,9 @@ class WahooPlan:
             output += "NAME={}\n".format(self.name)
 
         output += "DURATION={}\n".format(self.duration)
-        
+        output += "LOCATION_TYPE={}\n".format(self.location_type)
+        output += "WORKOUT_TYPE={}\n".format(self.workout_type)
+
         if self.description is not None:
             for line in textwrap.wrap(self.description, 96):
                 output += "DESCRIPTION={} \n".format(line)
